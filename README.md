@@ -1,6 +1,8 @@
-# Flutter Build Container
+# Flutter Build Environment
 
-A Flutter build environment, complete with:
+A Flutter build environment, to aide in CI/CD workflows.
+
+> NOTE: Currently only works with Android
 
 ## Components
 
