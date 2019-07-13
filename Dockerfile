@@ -35,10 +35,6 @@ RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
     unzip *tools*linux*.zip && \
     rm *tools*linux*.zip
 
-COPY license_accepter.sh .
-RUN chmod +x /opt/license_accepter.sh && \
-    /opt/license_accepter.sh $ANDROID_HOME
-
 # Flutter
 # https://flutter.dev/docs/get-started/install/linux
 RUN wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz && \
