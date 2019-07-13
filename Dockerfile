@@ -16,7 +16,7 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install -y --no-install-recommends libncurses5:i386 libc6:i386 libstdc++6:i386 lib32gcc1 lib32z1 zlib1g:i386 \
-                                                gnupg2 dirmngr git wget curl unzip xz-utils procps && \
+                                               gnupg2 dirmngr git wget curl unzip xz-utils procps rubygems && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
 
 WORKDIR /opt
@@ -52,12 +52,11 @@ RUN mkdir ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf && \
     rvm version && \
     rvm get stable --autolibs=enable && \
     usermod -a -G rvm root && \
-    rvm list known && \
     rvm install ruby-2.6.3 && \
     rvm --default use ruby-2.6.3 && \
-    ruby -v
+    gem install bundler
 
-# set up android pie sdk
+# set up sdk (android pie)
 RUN yes | sdkmanager --licenses && \
     sdkmanager --update && \
     sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.1"
