@@ -13,6 +13,9 @@ ENV PATH ${PATH}:${GRADLE_HOME}/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/too
 ENV _JAVA_OPTIONS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
 ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
 
+# switch shell to bash
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget curl unzip xz-utils gnupg2 dirmngr procps rubygems git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
@@ -38,9 +41,6 @@ RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
 RUN wget -q https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz && \
     tar xf /opt/flutter*.xz && \
     rm -rf /opt/flutter_linux_*.tar.xz
-
-# switch shell to bash
-SHELL ["/bin/bash", "-c"]
 
 # Ruby
 RUN mkdir ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf && \
