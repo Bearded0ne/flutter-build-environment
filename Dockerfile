@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-slim
 
 LABEL maintainer "Michael K. Essandoh <mexcon.mike@gmail.com>"
 
-ARG GRADLE_VERSION=5.1.1
+ARG GRADLE_VERSION=5.5.1
 ARG ANDROID_SDK_VERSION=4333796
 ARG FLUTTER_VERSION=v1.7.8+hotfix.3-stable
 
