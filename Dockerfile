@@ -18,8 +18,8 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends lib32stdc++6 wget curl unzip xz-utils gnupg2 dirmngr procps ruby-dev rubygems git \
-                                                g++ gcc autoconf automake bison patch bzip2 gawk libc6-dev libffi-dev libgdbm-dev libncurses5-dev \
-                                                libsqlite3-dev libtool libyaml-dev make pkg-config sqlite3 zlib1g-dev libgmp-dev libreadline-dev libssl-dev && \
+                                                build-essential zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
+                                                libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
 
 # create a new user, and set up environment
@@ -32,15 +32,16 @@ USER $USER
 SHELL ["/bin/bash", "-c"]
 
 # Ruby
-RUN mkdir ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf && \
-    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB && \
-    curl -sSL https://get.rvm.io | bash -s stable && \
-    source ~/.rvm/scripts/rvm && \
-    rvm version && \
-    rvm get stable --autolibs=read-fail && \
-    rvm install ruby-$RUBY_VERSION && \
-    rvm --default use ruby-$RUBY_VERSION && \
-    gem install bundler
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc && \
+    exec $SHELL && \
+    rbenv install 2.3.1 && \
+    rbenv global 2.3.1 && \
+    gem install bundler && \
+    rbenv rehash
 
 # Gradle
 # https://services.gradle.org/distributions/
