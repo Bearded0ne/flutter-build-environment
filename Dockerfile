@@ -27,7 +27,8 @@ WORKDIR /opt
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
     unzip gradle*.zip && \
     ls -d */ | sed 's/\/*$//g' | xargs -I{} mv {} gradle && \
-    rm gradle*.zip
+    rm gradle*.zip && \
+    gradle wrapper --gradle-version $GRADLE_VERSION
 
 # Android SDK
 # https://developer.android.com/studio/#downloads
