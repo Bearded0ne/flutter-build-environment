@@ -17,7 +17,7 @@ ENV LD_LIBRARY_PATH ${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib6
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends lib32stdc++6 wget curl unzip xz-utils gnupg2 dirmngr procps rubygems git && \
+    apt-get install -y --no-install-recommends lib32stdc++6 wget curl unzip xz-utils gnupg2 dirmngr procps ruby-dev rubygems git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
 
 WORKDIR /opt
