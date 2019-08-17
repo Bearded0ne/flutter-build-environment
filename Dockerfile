@@ -63,5 +63,3 @@ RUN yes | sdkmanager --licenses && \
 # set up flutter
 RUN flutter config --no-analytics && \
     flutter doctor
-
-RUN bundle install
