@@ -20,7 +20,10 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends lib32stdc++6 wget curl unzip xz-utils gnupg2 dirmngr procps ruby-dev rubygems git \
                                                 build-essential zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
                                                 libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev && \
+                                                ruby && \
     apt-get clean && rm -rf /var/lib/apt/lists/*;
+
+RUN gem install bundler
 
 # create a new user, and set up environment
 RUN useradd -ms /bin/bash flutter && \
@@ -30,18 +33,6 @@ USER $USER
 
 # switch shell to bash
 SHELL ["/bin/bash", "-c"]
-
-# Ruby
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \
-    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build && \
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \
-    echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc && \
-    exec $SHELL && \
-    rbenv install 2.3.1 && \
-    rbenv global 2.3.1 && \
-    gem install bundler && \
-    rbenv rehash
 
 # Gradle
 # https://services.gradle.org/distributions/
@@ -72,3 +63,5 @@ RUN yes | sdkmanager --licenses && \
 # set up flutter
 RUN flutter config --no-analytics && \
     flutter doctor
+
+RUN bundle install
